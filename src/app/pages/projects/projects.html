@@ -1,0 +1,26 @@
+<section class="projects">
+  <h1>Projects</h1>
+  <p class="intro">A selection of things I've built.</p>
+
+  <div class="projects__grid">
+    @for (project of projects; track project.title) {
+      <article class="card">
+        <h2>{{ project.title }}</h2>
+        <p>{{ project.description }}</p>
+        <ul class="card__tags">
+          @for (tag of project.tags; track tag) {
+            <li>{{ tag }}</li>
+          }
+        </ul>
+        <div class="card__links">
+          @if (project.repoUrl) {
+            <a [href]="project.repoUrl" target="_blank" rel="noopener noreferrer">Code</a>
+          }
+          @if (project.liveUrl) {
+            <a [href]="project.liveUrl" target="_blank" rel="noopener noreferrer">Live</a>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</section>

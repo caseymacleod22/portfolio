@@ -1,0 +1,26 @@
+<section class="hero">
+  <p class="hero__eyebrow">Hi, I'm</p>
+  <h1 class="hero__name">Casey MacLeod</h1>
+  <p class="hero__tagline">Software Engineer building clean, useful web apps.</p>
+  <div class="hero__actions">
+    <a class="button button--primary" routerLink="/projects">View Projects</a>
+    <a class="button button--secondary" routerLink="/contact">Get In Touch</a>
+  </div>
+</section>
+
+<section class="about">
+  <h2>About Me</h2>
+  <p>
+    Replace this paragraph with a short bio: what you build, what you're
+    curious about, and what kind of role or project you're looking for next.
+  </p>
+</section>
+
+<section class="skills">
+  <h2>Skills</h2>
+  <ul class="skills__list">
+    @for (skill of skills; track skill.name) {
+      <li>{{ skill.name }}</li>
+    }
+  </ul>
+</section>
