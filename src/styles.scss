@@ -1,27 +1,60 @@
+@mixin dark-theme-vars {
+  color-scheme: dark;
+
+  --color-bg: #101012;
+  --color-surface: #18181b;
+  --color-border: #2a2a2e;
+  --color-text: #f2f2f3;
+  --color-text-muted: #a1a1aa;
+
+  --color-primary: #0062A8;
+  --color-primary-contrast: #f2f2f3;
+  --color-accent: #ff7a45;
+  --color-accent-contrast: #1a1005;
+  --color-secondary: #69c0ff;
+  --color-secondary-contrast: #101012;
+
+  // Primary reads poorly against a dark surface, so dark mode leads with
+  // secondary for anything meant to stand out (links, active states, borders).
+  --color-feature: var(--color-secondary);
+  --color-feature-contrast: var(--color-secondary-contrast);
+
+  --color-error: #ff6b62;
+}
+
 :root {
+  color-scheme: light;
+
   --content-width: 64rem;
 
-  --color-bg: #ffffff;
-  --color-surface: #f7f7f8;
+  --color-bg: #f5f5f5;
+  --color-surface: #ffffff;
   --color-border: #e2e2e6;
   --color-text: #17171a;
   --color-text-muted: #5a5a63;
-  --color-accent: #3b5bfd;
-  --color-accent-contrast: #ffffff;
+
+  --color-primary: #235aa1;
+  --color-primary-contrast: #ffffff;
+  --color-accent: #ff7a45;
+  --color-accent-contrast: #1a1005;
+  --color-secondary: #69c0ff;
+  --color-secondary-contrast: #101012;
+
+  // Light mode leads with primary; secondary reads too pale on a light surface.
+  --color-feature: var(--color-primary);
+  --color-feature-contrast: var(--color-primary-contrast);
+
   --color-error: #d1453d;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #101012;
-    --color-surface: #18181b;
-    --color-border: #2a2a2e;
-    --color-text: #f2f2f3;
-    --color-text-muted: #a1a1aa;
-    --color-accent: #7c93ff;
-    --color-accent-contrast: #101012;
-    --color-error: #ff6b62;
+  :root:not([data-theme='light']) {
+    @include dark-theme-vars;
   }
+}
+
+:root[data-theme='dark'] {
+  @include dark-theme-vars;
 }
 
 * {
@@ -32,6 +65,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 body {
@@ -61,4 +95,9 @@ a {
 img {
   max-width: 100%;
   display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-feature);
+  outline-offset: 2px;
 }

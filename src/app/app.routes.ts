@@ -13,12 +13,6 @@ export const routes: Routes = [
     title: 'Projects — Portfolio',
   },
   {
-    path: 'contact',
-    loadComponent: () =>
-      import('./pages/contact/contact').then((m) => m.Contact),
-    title: 'Contact — Portfolio',
-  },
-  {
     path: '**',
     loadComponent: () =>
       import('./pages/not-found/not-found').then((m) => m.NotFound),

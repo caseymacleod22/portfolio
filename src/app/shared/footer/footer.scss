@@ -1,6 +1,5 @@
 .site-footer {
   border-top: 1px solid var(--color-border);
-  margin-top: 4rem;
 }
 
 .site-footer__inner {
@@ -25,7 +24,7 @@
     text-decoration: none;
 
     &:hover {
-      color: var(--color-accent);
+      color: var(--color-feature);
     }
   }
 }

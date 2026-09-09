@@ -1,26 +1,89 @@
 <section class="projects">
-  <h1>Projects</h1>
-  <p class="intro">A selection of things I've built.</p>
+  <div class="projects__head">
+    <div>
+      <h1>Projects</h1>
+      <p class="intro">Explore the dungeon corridor to learn more about some of the sites I've built, or just scroll the list.</p>
+    </div>
 
-  <div class="projects__grid">
-    @for (project of projects; track project.title) {
-      <article class="card">
-        <h2>{{ project.title }}</h2>
-        <p>{{ project.description }}</p>
-        <ul class="card__tags">
-          @for (tag of project.tags; track tag) {
-            <li>{{ tag }}</li>
-          }
-        </ul>
-        <div class="card__links">
-          @if (project.repoUrl) {
-            <a [href]="project.repoUrl" target="_blank" rel="noopener noreferrer">Code</a>
-          }
-          @if (project.liveUrl) {
-            <a [href]="project.liveUrl" target="_blank" rel="noopener noreferrer">Live</a>
+    <div class="mode-toggle">
+      <button type="button" [class.active]="viewMode() === 'explore'" (click)="setViewMode('explore')">
+        Explore Dungeon
+      </button>
+      <button type="button" [class.active]="viewMode() === 'list'" (click)="setViewMode('list')">
+        List View
+      </button>
+    </div>
+  </div>
+
+  @if (viewMode() === 'explore') {
+    <p class="controls-tooltip">
+      @if (touchFriendly()) {
+        Drag to look &middot; use the pad to move
+      } @else {
+        Click to look around &middot; WASD to move &middot; Esc to release cursor
+      }
+    </p>
+
+    <div #viewport class="dungeon-wrapper">
+      <canvas #canvas class="dungeon-canvas"></canvas>
+
+      <div class="reticle" [class.reticle--hover]="hoveringDoor()" aria-hidden="true"></div>
+
+      <canvas #minimap class="minimap" aria-hidden="true"></canvas>
+
+      @if (nearbyExhibit(); as exhibit) {
+        <div class="door-panel">
+          <p class="door-panel__role">{{ exhibit.role }}</p>
+          <h3>{{ exhibit.title }}</h3>
+          <p>{{ exhibit.description }}</p>
+          <ul class="door-panel__tags">
+            @for (tag of exhibit.stack; track tag) {
+              <li>{{ tag }}</li>
+            }
+          </ul>
+          @if (exhibit.liveUrl) {
+            <p class="door-panel__hint">Click the panel to open the live site &#8599;</p>
           }
         </div>
-      </article>
-    }
-  </div>
+      }
+
+      @if (touchFriendly()) {
+        <div class="dpad" aria-hidden="true">
+          <button type="button" class="dpad__btn dpad__btn--up"
+            (pointerdown)="press('forward', true)" (pointerup)="press('forward', false)" (pointerleave)="press('forward', false)">&#9650;</button>
+          <button type="button" class="dpad__btn dpad__btn--left"
+            (pointerdown)="press('left', true)" (pointerup)="press('left', false)" (pointerleave)="press('left', false)">&#9664;</button>
+          <button type="button" class="dpad__btn dpad__btn--right"
+            (pointerdown)="press('right', true)" (pointerup)="press('right', false)" (pointerleave)="press('right', false)">&#9654;</button>
+          <button type="button" class="dpad__btn dpad__btn--down"
+            (pointerdown)="press('backward', true)" (pointerup)="press('backward', false)" (pointerleave)="press('backward', false)">&#9660;</button>
+        </div>
+      }
+    </div>
+  }
+
+  @if (viewMode() === 'list') {
+    <div class="projects__grid">
+      @for (exhibit of exhibits; track exhibit.title) {
+        <article class="card">
+          @if (visitedTitles().has(exhibit.title)) {
+            <span class="card__badge">Visited</span>
+          }
+          <h2>{{ exhibit.title }}</h2>
+          <p class="card__role">{{ exhibit.role }}</p>
+          <p>{{ exhibit.description }}</p>
+          <ul class="card__tags">
+            @for (tag of exhibit.stack; track tag) {
+              <li>{{ tag }}</li>
+            }
+          </ul>
+          @if (exhibit.liveUrl) {
+            <a class="card__link" [href]="exhibit.liveUrl" target="_blank" rel="noopener noreferrer">
+              Visit Live Site
+            </a>
+          }
+        </article>
+      }
+    </div>
+  }
 </section>

@@ -1,26 +1,84 @@
 <section class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+
+  <span class="hero__badge">
+    <span class="hero__badge-dot"></span>
+    Open to new opportunities
+  </span>
+
   <p class="hero__eyebrow">Hi, I'm</p>
   <h1 class="hero__name">Casey MacLeod</h1>
-  <p class="hero__tagline">Software Engineer building clean, useful web apps.</p>
+  <p class="hero__tagline">Frontend-focused software engineer building performant, accessible and scaleable websites.
+  </p>
+
+  <ul class="hero__stack" aria-label="Core technologies">
+    @for (tech of heroStack; track tech) {
+      <li>{{ tech }}</li>
+    }
+  </ul>
+
   <div class="hero__actions">
     <a class="button button--primary" routerLink="/projects">View Projects</a>
-    <a class="button button--secondary" routerLink="/contact">Get In Touch</a>
+    <button type="button" class="button button--secondary" (click)="openContact()">Get In Touch</button>
+  </div>
+</section>
+
+<section class="work">
+  <div class="work__head">
+    <h2 class="section-heading">Selected Work</h2>
+    <a class="work__all" routerLink="/projects">Explore more projects &rarr;</a>
+  </div>
+
+  <div class="work__grid">
+    @for (project of featuredProjects; track project.title) {
+    <a class="work-card" [href]="project.liveUrl" target="_blank" rel="noopener noreferrer">
+      <img [src]="project.image" [alt]="project.title" loading="lazy" />
+      <div class="work-card__body">
+        <h3>{{ project.title }}</h3>
+        <p>{{ project.description }}</p>
+      </div>
+    </a>
+    }
+  </div>
+</section>
+
+<section class="skills">
+  <h2 class="section-heading">Skills</h2>
+  <div class="skills__marquee">
+    <ul class="skills__track">
+      @for (skill of skills; track $index) {
+      <li>{{ skill }}</li>
+      }
+      @for (skill of skills; track $index) {
+      <li aria-hidden="true">{{ skill }}</li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="highlights">
+  <div class="highlights__grid">
+    @for (highlight of highlights; track highlight.title) {
+    <article class="highlight-card">
+      <h3>{{ highlight.title }}</h3>
+      <p>{{ highlight.description }}</p>
+    </article>
+    }
   </div>
 </section>
 
 <section class="about">
-  <h2>About Me</h2>
-  <p>
-    Replace this paragraph with a short bio: what you build, what you're
-    curious about, and what kind of role or project you're looking for next.
-  </p>
-</section>
+  <div class="about__grid">
+    <div class="about__bio">
+      <h2 class="section-heading">About Me</h2>
+      <p>
+        For the past 5 years I've been building websites starting with the design and UX process, all the way to launch day. Along the way I've single-handedly scoped, built, and deployed over 25 sites for clients ranging from local businesses, to enterprise level corporations.
+      </p>
+      <p>
+        Outside of work I enjoy golfing, playing video games and trading card games, listening to music, and watching sports. I love to try new things, so my hobbies tend to change often!
+      </p>
+    </div>
 
-<section class="skills">
-  <h2>Skills</h2>
-  <ul class="skills__list">
-    @for (skill of skills; track skill.name) {
-      <li>{{ skill.name }}</li>
-    }
-  </ul>
+    <img class="about__photo" src="images/casey-croatia.jpg" alt="Casey MacLeod" loading="lazy" />
+  </div>
 </section>
