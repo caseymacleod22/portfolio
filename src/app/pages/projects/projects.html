@@ -2,17 +2,23 @@
   <div class="projects__head">
     <div>
       <h1>Projects</h1>
-      <p class="intro">Explore the dungeon corridor to learn more about some of the sites I've built, or just scroll the list.</p>
+      @if (isCompact()) {
+        <p class="intro">A look at some of the sites I've built.</p>
+      } @else {
+        <p class="intro">Explore the dungeon corridor to learn more about some of the sites I've built, or just scroll the list.</p>
+      }
     </div>
 
-    <div class="mode-toggle">
-      <button type="button" [class.active]="viewMode() === 'explore'" (click)="setViewMode('explore')">
-        Explore Dungeon
-      </button>
-      <button type="button" [class.active]="viewMode() === 'list'" (click)="setViewMode('list')">
-        List View
-      </button>
-    </div>
+    @if (!isCompact()) {
+      <div class="mode-toggle">
+        <button type="button" [class.active]="viewMode() === 'explore'" (click)="setViewMode('explore')">
+          Explore Dungeon
+        </button>
+        <button type="button" [class.active]="viewMode() === 'list'" (click)="setViewMode('list')">
+          List View
+        </button>
+      </div>
+    }
   </div>
 
   @if (viewMode() === 'explore') {

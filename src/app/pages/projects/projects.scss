@@ -329,24 +329,3 @@ h1 {
   }
 }
 
-@media (max-width: 640px) {
-  .dungeon-wrapper {
-    height: 60vh;
-  }
-
-  .dpad {
-    width: 7rem;
-    height: 7rem;
-  }
-
-  .minimap {
-    top: 1rem;
-    bottom: auto;
-    width: 4.5rem;
-    height: 8rem;
-  }
-
-  .door-panel {
-    left: 1.25rem;
-  }
-}

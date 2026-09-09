@@ -63,7 +63,7 @@ export class Projects implements AfterViewInit, OnDestroy {
     {
       title: 'Elite Team',
       role: 'Custom WordPress Theme',
-      description: 'Custom theme for a small business financial lender. Built with increasing leads in mind, this simple landing page increased contact form fills by nearly 80%.',
+      description: 'Custom WordPress theme for a small business financial lender. Built with increasing leads in mind, this simple landing page increased contact form fills by nearly 80%.',
       stack: ['WordPress', 'PHP', 'JavaScript', 'SCSS'],
       liveUrl: 'https://eliteteam.com/',
       screenshot: 'images/elite-team.png',
@@ -71,7 +71,7 @@ export class Projects implements AfterViewInit, OnDestroy {
     {
       title: 'Northstar Water',
       role: 'Custom WordPress Theme',
-      description: 'Custom theme for a water treatment supplier. Includes custom built servicer and wholesaler locators that finds the nearest location to the user from over two thousand locations.',
+      description: 'Custom WordPress theme for a water treatment supplier. Includes custom built servicer and wholesaler locators that finds the nearest location to the user from over two thousand locations.',
       stack: ['WordPress', 'PHP', 'JavaScript', 'SCSS'],
       liveUrl: 'https://www.northstarwater.com/',
       screenshot: 'images/northstar-water.png',
@@ -87,7 +87,7 @@ export class Projects implements AfterViewInit, OnDestroy {
     {
       title: 'Rocket55',
       role: 'Custom WordPress Theme',
-      description: 'Custom theme for a digital marketing agency. Built in collaboration with a team of three other developers.',
+      description: 'Custom WordPress theme for a digital marketing agency. Built in collaboration with a team of three other developers.',
       stack: ['WordPress', 'PHP', 'JavaScript', 'SCSS'],
       liveUrl: 'https://www.rocket55.com/',
       screenshot: 'images/rocket55.png',
@@ -103,14 +103,16 @@ export class Projects implements AfterViewInit, OnDestroy {
     {
       title: 'Copperhead Wire',
       role: 'Custom WordPress Theme',
-      description: 'Custom theme for a manufacturer of copper-clad steel tracer wire. Built and deployed in two weeks in collaboration with two other developers.',
+      description: 'Custom WordPress theme for a manufacturer of copper-clad steel tracer wire. Built and deployed in two weeks in collaboration with two other developers.',
       stack: ['WordPress', 'PHP', 'JavaScript', 'SCSS'],
       liveUrl: 'https://copperheadwire.com/',
       screenshot: 'images/copperhead-wire.png',
     },
   ];
 
-  protected readonly viewMode = signal<'explore' | 'list'>('explore');
+  private readonly compactMedia = window.matchMedia('(max-width: 1024px)');
+  protected readonly isCompact = signal(this.compactMedia.matches);
+  protected readonly viewMode = signal<'explore' | 'list'>(this.compactMedia.matches ? 'list' : 'explore');
   protected readonly touchFriendly = signal(false);
   protected readonly pointerLocked = signal(false);
   protected readonly nearbyExhibit = signal<Exhibit | null>(null);
@@ -123,21 +125,33 @@ export class Projects implements AfterViewInit, OnDestroy {
   private minimapLayout?: MinimapLayout;
   private lastPlayerState = { x: 0, z: 0, yaw: 0 };
 
+  private readonly onCompactChange = (event: MediaQueryListEvent) => {
+    this.isCompact.set(event.matches);
+    if (event.matches && this.viewMode() === 'explore') {
+      this.setViewMode('list');
+    }
+  };
+
   constructor(private readonly ngZone: NgZone) { }
 
   ngAfterViewInit(): void {
     if (window.matchMedia('(pointer: coarse)').matches) {
       this.touchFriendly.set(true);
     }
-    this.ensureScene();
+    this.compactMedia.addEventListener('change', this.onCompactChange);
+    if (!this.isCompact()) {
+      this.ensureScene();
+    }
   }
 
   ngOnDestroy(): void {
+    this.compactMedia.removeEventListener('change', this.onCompactChange);
     this.resizeObserver?.disconnect();
     this.scene?.dispose();
   }
 
   protected setViewMode(mode: 'explore' | 'list'): void {
+    if (mode === 'explore' && this.isCompact()) return;
     this.viewMode.set(mode);
     if (mode === 'explore') {
       setTimeout(() => this.ensureScene());
