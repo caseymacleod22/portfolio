@@ -169,7 +169,7 @@ h1 {
 }
 
 .door-panel__role {
-  color: #7fe0b4;
+  color: var(--color-feature);
   font-weight: 600;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -199,7 +199,7 @@ h1 {
   margin: 0 !important;
   font-size: 0.8rem !important;
   font-weight: 600;
-  color: #7fe0b4 !important;
+  color: var(--color-feature)!important;
 }
 
 .dpad {

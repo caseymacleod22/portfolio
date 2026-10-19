@@ -288,11 +288,13 @@ export class Projects implements AfterViewInit, OnDestroy {
     });
     ctx.stroke();
 
+    // Canvas can't read CSS variables, so resolve the theme color each draw.
+    const visitedColor = getComputedStyle(ctx.canvas).getPropertyValue('--color-feature').trim() || '#b48de6';
     const visited = this.visitedTitles();
     for (const door of layout.doors) {
       ctx.beginPath();
       ctx.arc(toX(door.x), toY(door.z), 3, 0, Math.PI * 2);
-      ctx.fillStyle = visited.has(door.title) ? 'rgba(127, 224, 180, 0.9)' : 'rgba(255, 171, 94, 0.6)';
+      ctx.fillStyle = visited.has(door.title) ? visitedColor : 'rgba(255, 171, 94, 0.6)';
       ctx.fill();
     }
 
