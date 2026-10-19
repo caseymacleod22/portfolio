@@ -43,6 +43,7 @@ export class Header {
 
   @HostListener('document:keydown.escape')
   protected onEscape(): void {
+    this.closeMenu();
     this.contact.close();
   }
 }

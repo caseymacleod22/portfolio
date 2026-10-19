@@ -1,9 +1,12 @@
 <header class="site-header">
-  <nav id="primary-nav" class="site-nav" [class.site-nav--open]="menuOpen()">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
-    <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Projects</a>
-    <button type="button" class="site-nav__button" (click)="openContact()">Contact</button>
-        <div class="site-header__actions">
+  <nav class="site-nav">
+    <div id="primary-nav-links" class="site-nav__links" [class.site-nav__links--open]="menuOpen()">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
+      <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Projects</a>
+      <button type="button" class="site-nav__button" (click)="openContact()">Contact</button>
+    </div>
+
+    <div class="site-header__actions">
       <button
         type="button"
         class="theme-toggle"
@@ -26,8 +29,9 @@
       <button
         type="button"
         class="menu-toggle"
+        [class.menu-toggle--open]="menuOpen()"
         [attr.aria-expanded]="menuOpen()"
-        aria-controls="primary-nav"
+        aria-controls="primary-nav-links"
         aria-label="Toggle navigation menu"
         (click)="toggleMenu()"
       >
