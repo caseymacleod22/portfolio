@@ -71,24 +71,30 @@
   @if (viewMode() === 'list') {
     <div class="projects__grid">
       @for (exhibit of exhibits; track exhibit.title) {
-        <article class="card">
+        <a class="card" [href]="exhibit.liveUrl" target="_blank" rel="noopener noreferrer">
           @if (visitedTitles().has(exhibit.title)) {
             <span class="card__badge">Visited</span>
           }
-          <h2>{{ exhibit.title }}</h2>
-          <p class="card__role">{{ exhibit.role }}</p>
-          <p>{{ exhibit.description }}</p>
-          <ul class="card__tags">
-            @for (tag of exhibit.stack; track tag) {
-              <li>{{ tag }}</li>
+          <div class="card__media">
+            @if (exhibit.screenshot) {
+              <img [src]="exhibit.screenshot" [alt]="exhibit.title + ' homepage'" loading="lazy" />
             }
-          </ul>
-          @if (exhibit.liveUrl) {
-            <a class="card__link" [href]="exhibit.liveUrl" target="_blank" rel="noopener noreferrer">
-              Visit Live Site
-            </a>
-          }
-        </article>
+            <div class="card__overlay">
+              <p>{{ exhibit.description }}</p>
+              <ul class="card__tags">
+                @for (tag of exhibit.stack; track tag) {
+                  <li>{{ tag }}</li>
+                }
+              </ul>
+              <span class="card__cta">Visit live site &#8599;</span>
+            </div>
+          </div>
+          <div class="card__body">
+            <h2>{{ exhibit.title }}</h2>
+            <p class="card__role">{{ exhibit.role }}</p>
+            <p class="card__description">{{ exhibit.description }}</p>
+          </div>
+        </a>
       }
     </div>
   }

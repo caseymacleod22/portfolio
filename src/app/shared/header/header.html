@@ -1,8 +1,9 @@
 <header class="site-header">
-  <div class="site-header__bar">
-    <a class="brand" routerLink="/" (click)="closeMenu()">Casey MacLeod</a>
-
-    <div class="site-header__actions">
+  <nav id="primary-nav" class="site-nav" [class.site-nav--open]="menuOpen()">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
+    <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Projects</a>
+    <button type="button" class="site-nav__button" (click)="openContact()">Contact</button>
+        <div class="site-header__actions">
       <button
         type="button"
         class="theme-toggle"
@@ -35,12 +36,6 @@
         <span></span>
       </button>
     </div>
-  </div>
-
-  <nav id="primary-nav" class="site-nav" [class.site-nav--open]="menuOpen()">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">Home</a>
-    <a routerLink="/projects" routerLinkActive="active" (click)="closeMenu()">Projects</a>
-    <button type="button" class="site-nav__button" (click)="openContact()">Contact</button>
   </nav>
 </header>
 
